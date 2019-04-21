@@ -7,22 +7,22 @@ using System.Threading.Tasks;
 
 namespace Mass_Effect
 {
-    class Node<T>
+    class LNode<T>
     {
         private T data;
-        private Node<T> next;
+        private LNode<T> next;
 
-        public Node(T data)
+        public LNode(T data)
         {
             this.data = data;
         }
 
-        public void setNext(Node<T> next)
+        public void setNext(LNode<T> next)
         {
             this.next = next;
         }
 
-        public Node<T> getNext()
+        public LNode<T> getNext()
         {
             return this.next;
         }
@@ -40,14 +40,14 @@ namespace Mass_Effect
 
     class SingleLinkedList<T> : IEnumerable<T>
     {
-        public Node<T> Head
+        public LNode<T> Head
         {
             get
             {
                 return head;
             }
         }
-        public Node<T> Tail
+        public LNode<T> Tail
         {
             get
             {
@@ -55,10 +55,10 @@ namespace Mass_Effect
             }
         }
 
-        private Node<T> head;
-        private Node<T> tail;
+        private LNode<T> head;
+        private LNode<T> tail;
 
-        public void addFirst(Node<T> node)
+        public void addFirst(LNode<T> node)
         {
             if (head == null)
             {
@@ -72,7 +72,7 @@ namespace Mass_Effect
             }
         }
 
-        public void addLast(Node<T> node)
+        public void addLast(LNode<T> node)
         {
             if (tail == null)
             {
@@ -86,18 +86,18 @@ namespace Mass_Effect
             }
         }
 
-        public void insertAfter(Node<T> nodeBefore, Node<T> node)
+        public void insertAfter(LNode<T> nodeBefore, LNode<T> node)
         {
-            Node<T> nodeAfter = nodeBefore.getNext();
+            LNode<T> nodeAfter = nodeBefore.getNext();
             nodeBefore.setNext(node);
             node.setNext(nodeAfter);
         }
 
-        public Node<T> findNodeBefore(Node<T> node)
+        public LNode<T> findNodeBefore(LNode<T> node)
         {
             if (object.ReferenceEquals(head, node)) return null;
-            Node<T> nodeBefore = head;
-            Node<T> cursor = head;
+            LNode<T> nodeBefore = head;
+            LNode<T> cursor = head;
             while (cursor != null)
             {
                 if (object.ReferenceEquals(node, cursor)) return nodeBefore;
@@ -107,9 +107,9 @@ namespace Mass_Effect
             return null;
         }
 
-        public void removeLink(Node<T> node)
+        public void removeLink(LNode<T> node)
         {
-            Node<T> nodeBefore = findNodeBefore(node);
+            LNode<T> nodeBefore = findNodeBefore(node);
             if (nodeBefore == null) return;
             if (object.ReferenceEquals(head, node)) head = node;
             if (object.ReferenceEquals(tail, node)) tail = nodeBefore;
@@ -118,8 +118,8 @@ namespace Mass_Effect
 
         public void remove(T item)
         {
-            Node<T> h = head;
-            Node<T> e = null;
+            LNode<T> h = head;
+            LNode<T> e = null;
 
             while (h != null && !h.getValue().Equals(item))
             {
@@ -146,7 +146,7 @@ namespace Mass_Effect
 
         public void displayAllNodes()
         {
-            Node<T> cursor = head;
+            LNode<T> cursor = head;
             while (cursor != null)
             {
                 Console.WriteLine(cursor.getValue().ToString());
@@ -158,7 +158,7 @@ namespace Mass_Effect
 
         public void Traverse(Operation o)
         {
-            Node<T> node = head;
+            LNode<T> node = head;
             while (node != null)
             {
                 o(node.getValue());
@@ -177,10 +177,10 @@ namespace Mass_Effect
         }
         class ListEnumerator : IEnumerator<T>
         {
-            Node<T> node;
-            Node<T> cursor;
+            LNode<T> node;
+            LNode<T> cursor;
 
-            public ListEnumerator(Node<T> node)
+            public ListEnumerator(LNode<T> node)
             {
                 this.node = node;
                 this.cursor = null;
