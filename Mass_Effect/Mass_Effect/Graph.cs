@@ -32,7 +32,7 @@ namespace Mass_Effect
             get { return neighbors.AsReadOnly(); }
         }
 
-        public bool addNeighbor(GraphNode<T> neighbor)
+        public bool AddNeighbor(GraphNode<T> neighbor)
         {
             if (neighbors.Contains(neighbor))
             {
@@ -45,12 +45,12 @@ namespace Mass_Effect
             }
         }
 
-        public bool removeNeighbor(GraphNode<T> neighbor)
+        public bool RemoveNeighbor(GraphNode<T> neighbor)
         {
             return neighbors.Remove(neighbor);
         }
 
-        public bool removeAllNeighbors()
+        public bool RemoveAllNeighbors()
         {
             for (int i = neighbors.Count - 1; i >= 0; i--)
             {
@@ -93,7 +93,7 @@ namespace Mass_Effect
         {
             foreach (GraphNode<T> node in nodes)
             {
-                node.removeAllNeighbors();
+                node.RemoveAllNeighbors();
             }
 
             for (int i = nodes.Count - 1; i >= 0; i--)
@@ -102,7 +102,7 @@ namespace Mass_Effect
             }
         }
 
-        public GraphNode<T> find(T value)
+        public GraphNode<T> Find(T value)
         {
             foreach (GraphNode<T> node in nodes)
             {
@@ -111,9 +111,9 @@ namespace Mass_Effect
             return null;
         }
 
-        public bool addNode(T value)
+        public bool AddNode(T value)
         {
-            if (find(value) != null)
+            if (Find(value) != null)
             {
                 return false;
             }
@@ -124,45 +124,45 @@ namespace Mass_Effect
             }
         }
 
-        public bool addEdge(T value1, T value2)
+        public bool AddEdge(T value1, T value2)
         {
-            GraphNode<T> node1 = find(value1);
-            GraphNode<T> node2 = find(value2);
+            GraphNode<T> node1 = Find(value1);
+            GraphNode<T> node2 = Find(value2);
             if (node1 == null || node2 == null) return false;
             else if (node1.Neighbors.Contains(node2)) return false;
             else
             {
-                node1.addNeighbor(node2);
-                node2.addNeighbor(node1);
+                node1.AddNeighbor(node2);
+                node2.AddNeighbor(node1);
                 return true;
             }
         }
 
-        public bool removeNode(T value)
+        public bool RemoveNode(T value)
         {
-            GraphNode<T> removeNode = find(value);
+            GraphNode<T> removeNode = Find(value);
             if (removeNode == null) return false;
             else
             {
                 nodes.Remove(removeNode);
                 foreach (GraphNode<T> node in nodes)
                 {
-                    node.removeNeighbor(removeNode);
+                    node.RemoveNeighbor(removeNode);
                 }
                 return true;
             }
         }
 
-        public bool removeEdge(T value1, T value2)
+        public bool RemoveEdge(T value1, T value2)
         {
-            GraphNode<T> node1 = find(value1);
-            GraphNode<T> node2 = find(value2);
+            GraphNode<T> node1 = Find(value1);
+            GraphNode<T> node2 = Find(value2);
             if (node1 == null || node2 == null) return false;
             else if (!node1.Neighbors.Contains(node2)) return false;
             else
             {
-                node1.removeNeighbor(node2);
-                node2.removeNeighbor(node1);
+                node1.RemoveNeighbor(node2);
+                node2.RemoveNeighbor(node1);
                 return true;
             }
         }

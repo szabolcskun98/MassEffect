@@ -29,12 +29,12 @@ namespace Mass_Effect
         }
     }
 
-    abstract class LinkedList<T> : IEnumerable<T>
+    abstract class SingleLinkedList<T> : IEnumerable<T>
     {
         protected LinkedListNode<T> head;
         protected int count;
 
-        protected LinkedList()
+        protected SingleLinkedList()
         {
             this.head = null;
             this.count = 0;
@@ -211,7 +211,7 @@ namespace Mass_Effect
         }
     }
 
-    class UnsortedLinkedList<T> : LinkedList<T>
+    class UnsortedLinkedList<T> : SingleLinkedList<T>
     {
         public UnsortedLinkedList() : base()
         {
@@ -225,7 +225,7 @@ namespace Mass_Effect
         }
     }
 
-    class SortedLinkedList<T> : LinkedList<T> where T : IComparable
+    class SortedLinkedList<T> : SingleLinkedList<T> where T : IComparable
     {
         public SortedLinkedList() : base()
         {
