@@ -141,6 +141,25 @@ namespace Mass_Effect
             }
         }
 
+        public T this[int index]
+        {
+            get {
+
+                if (index < count && index >= 0)
+                {
+                    LinkedListNode<T> currentNode = head;
+                    int idx = 0;
+                    while (idx < count && currentNode != null)
+                    {
+                        if (idx == index) return currentNode.Value;
+                        currentNode = currentNode.Next;
+                        idx++;
+                    }
+                }
+                return default(T);
+            }
+        }
+
         public IEnumerator<T> GetEnumerator()
         {
             return new ListEnumerator(head);
