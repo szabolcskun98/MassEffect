@@ -19,7 +19,14 @@ namespace Mass_Effect
 
         public T Value
         {
-            get { return value; }
+            get
+            {
+                return value;
+            }
+            set
+            {
+                this.value = value;
+            }
         }
 
         public SLinkedListNode<T> Next
@@ -143,8 +150,8 @@ namespace Mass_Effect
 
         public T this[int index]
         {
-            get {
-
+            get
+            {
                 if (index < count && index >= 0)
                 {
                     SLinkedListNode<T> currentNode = head;
@@ -157,6 +164,21 @@ namespace Mass_Effect
                     }
                 }
                 return default(T);
+            }
+            set
+            {
+                if (index < count && index >= 0)
+                {
+                    SLinkedListNode<T> currentNode = head;
+                    int idx = 0;
+                    while (idx < count && currentNode != null)
+                    {
+                        if (idx == index) break;
+                        currentNode = currentNode.Next;
+                        idx++;
+                    }
+                    if (currentNode != null && idx == index) currentNode.Value = value;
+                }
             }
         }
 
