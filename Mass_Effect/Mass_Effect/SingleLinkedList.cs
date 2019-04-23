@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace Mass_Effect
 {
-    class LinkedListNode<T>
+    class SLinkedListNode<T>
     {
         T value;
-        LinkedListNode<T> next;
-        public LinkedListNode(T value, LinkedListNode<T> next)
+        SLinkedListNode<T> next;
+        public SLinkedListNode(T value, SLinkedListNode<T> next)
         {
             this.value = value;
             this.next = next;
@@ -22,7 +22,7 @@ namespace Mass_Effect
             get { return value; }
         }
 
-        public LinkedListNode<T> Next
+        public SLinkedListNode<T> Next
         {
             get { return next; }
             set { next = value; }
@@ -31,7 +31,7 @@ namespace Mass_Effect
 
     abstract class SingleLinkedList<T> : IEnumerable<T>
     {
-        protected LinkedListNode<T> head;
+        protected SLinkedListNode<T> head;
         protected int count;
 
         protected SingleLinkedList()
@@ -45,7 +45,7 @@ namespace Mass_Effect
             get { return count; }
         }
 
-        public LinkedListNode<T> Head
+        public SLinkedListNode<T> Head
         {
             get { return head; }
         }
@@ -56,8 +56,8 @@ namespace Mass_Effect
         {
             if (head != null)
             {
-                LinkedListNode<T> previousNode = head;
-                LinkedListNode<T> currentNode = head.Next;
+                SLinkedListNode<T> previousNode = head;
+                SLinkedListNode<T> currentNode = head.Next;
                 previousNode.Next = null;
                 while (currentNode != null)
                 {
@@ -81,8 +81,8 @@ namespace Mass_Effect
             }
             else
             {
-                LinkedListNode<T> previousNode = head;
-                LinkedListNode<T> currentNode = head.Next;
+                SLinkedListNode<T> previousNode = head;
+                SLinkedListNode<T> currentNode = head.Next;
                 while (currentNode != null && !currentNode.Value.Equals(item))
                 {
                     previousNode = currentNode;
@@ -98,9 +98,9 @@ namespace Mass_Effect
                 }
             }
         }
-        public LinkedListNode<T> Find(T item)
+        public SLinkedListNode<T> Find(T item)
         {
-            LinkedListNode<T> currentNode = head;
+            SLinkedListNode<T> currentNode = head;
             while (currentNode != null && !currentNode.Value.Equals(item))
             {
                 currentNode = currentNode.Next;
@@ -113,7 +113,7 @@ namespace Mass_Effect
         public override string ToString()
         {
             StringBuilder builder = new StringBuilder();
-            LinkedListNode<T> currentNode = head;
+            SLinkedListNode<T> currentNode = head;
             int nodeCount = 0;
             builder.Append("[");
             while (currentNode != null)
@@ -133,7 +133,7 @@ namespace Mass_Effect
         public delegate void Operation(T item);
         public void Traverse(Operation o)
         {
-            LinkedListNode<T> node = head;
+            SLinkedListNode<T> node = head;
             while (node != null)
             {
                 o(node.Value);
@@ -147,7 +147,7 @@ namespace Mass_Effect
 
                 if (index < count && index >= 0)
                 {
-                    LinkedListNode<T> currentNode = head;
+                    SLinkedListNode<T> currentNode = head;
                     int idx = 0;
                     while (idx < count && currentNode != null)
                     {
@@ -172,10 +172,10 @@ namespace Mass_Effect
 
         class ListEnumerator : IEnumerator<T>
         {
-            LinkedListNode<T> node;
-            LinkedListNode<T> cursor;
+            SLinkedListNode<T> node;
+            SLinkedListNode<T> cursor;
 
-            public ListEnumerator(LinkedListNode<T> node)
+            public ListEnumerator(SLinkedListNode<T> node)
             {
                 this.node = node;
                 this.cursor = null;
@@ -219,8 +219,8 @@ namespace Mass_Effect
 
         public override void Add(T item)
         {
-            if (head == null) head = new LinkedListNode<T>(item, null);
-            else head = new LinkedListNode<T>(item, head);
+            if (head == null) head = new SLinkedListNode<T>(item, null);
+            else head = new SLinkedListNode<T>(item, head);
             count++;
         }
     }
@@ -233,18 +233,18 @@ namespace Mass_Effect
 
         public override void Add(T item)
         {
-            if (head == null) head = new LinkedListNode<T>(item, null);
-            else if (head.Value.CompareTo(item) > 0) head = new LinkedListNode<T>(item, head);
+            if (head == null) head = new SLinkedListNode<T>(item, null);
+            else if (head.Value.CompareTo(item) > 0) head = new SLinkedListNode<T>(item, head);
             else
             {
-                LinkedListNode<T> previousNode = null;
-                LinkedListNode<T> currentNode = head;
+                SLinkedListNode<T> previousNode = null;
+                SLinkedListNode<T> currentNode = head;
                 while (currentNode != null && currentNode.Value.CompareTo(item) < 0)
                 {
                     previousNode = currentNode;
                     currentNode = currentNode.Next;
                 }
-                previousNode.Next = new LinkedListNode<T>(item, currentNode);
+                previousNode.Next = new SLinkedListNode<T>(item, currentNode);
             }
             count++;
         }

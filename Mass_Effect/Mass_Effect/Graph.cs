@@ -177,6 +177,72 @@ namespace Mass_Effect
             }
             return builder.ToString();
         }
+
+        public string Search(T start, T finish, SearchType searchType)
+        {
+            LinkedList<GraphNode<T>> searchList = new LinkedList<GraphNode<T>>();
+            if (start.Equals(finish)) return start.ToString();
+            else if (Find(start) == null || Find(finish) == null) return "";
+            else
+            {
+                GraphNode<T> startNode = Find(start);
+                Dictionary<GraphNode<T>, PathNodeInfo<T>> pathNodes = new Dictionary<GraphNode<T>, PathNodeInfo<T>>();
+                pathNodes.Add(startNode, new PathNodeInfo<T>(null));
+                searchList.AddFirst(startNode);
+
+                while (searchList.Count > 0)
+                {
+                    GraphNode<T> currentNode = searchList.First.Value;
+                    searchList.RemoveFirst();
+
+                    foreach (GraphNode <T> neighbor in currentNode.Neighbors)
+                    {
+                        if (neighbor.Value.Equals(finish))
+                        {
+                            pathNodes.Add(neighbor, new PathNodeInfo<T>(currentNode));
+                            return ConvertPathToString(neighbor, pathNodes);
+                        }
+                        else if (pathNodes.ContainsKey(neighbor)) continue;
+                        else
+                        {
+                            pathNodes.Add(neighbor,new PathNodeInfo<T>(currentNode));
+                            if (searchType == SearchType.DFS) searchList.AddFirst(neighbor);
+                            else searchList.AddLast(neighbor);
+                        }
+                    }
+                }
+            }
+            return "";
+        }
+
+        public string ConvertPathToString(GraphNode<T> endNode, Dictionary<GraphNode<T>, PathNodeInfo<T>> pathNodes)
+        {
+            LinkedList<GraphNode<T>> path = new LinkedList<GraphNode<T>>();
+            path.AddFirst(endNode);
+            GraphNode<T> previous = pathNodes[endNode].Previous;
+
+            while (previous != null)
+            {
+                path.AddFirst(previous);
+                previous = pathNodes[previous].Previous;
+            }
+
+            StringBuilder pathString = new StringBuilder();
+            LinkedListNode<GraphNode<T>> currentNode = path.First;
+            int nodeCount = 0;
+
+            while (currentNode != null)
+            {
+                nodeCount++;
+                pathString.Append(currentNode.Value.Value.ToString());
+                if (nodeCount < path.Count)
+                {
+                    pathString.Append(" ");
+                }
+                currentNode = currentNode.Next;
+            }
+            return pathString.ToString();
+        }
     }
 
     class PathNodeInfo<T>
@@ -192,6 +258,5 @@ namespace Mass_Effect
         {
             get { return previous; }
         }
-
     }
 }
