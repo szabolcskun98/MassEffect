@@ -62,10 +62,10 @@ namespace Mass_Effect
         public override string ToString()
         {
             StringBuilder nodeString = new StringBuilder();
-            nodeString.Append($"[Node value: {value}, Neighbors: ");
+            nodeString.Append($"[Node value: {value.ToString()}, Neighbors: ");
             for (int i = 0; i < neighbors.Count; i++)
             {
-                nodeString.Append($"{neighbors[i].value} ");
+                nodeString.Append($"{neighbors[i].value.ToString()} ");
             }
             nodeString.Append("]");
             return nodeString.ToString();
