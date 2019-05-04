@@ -33,6 +33,10 @@ namespace Mass_Effect
                 return credit / riskLevel;
             }
         }
+
+        public override string ToString()
+        {
+            return $"{{name: {name}, details: {details}, credit: {credit}, risk level: {riskLevel}}}";
+        }
     }
 }
-d

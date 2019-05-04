@@ -10,6 +10,9 @@ namespace Mass_Effect
     {
         static void Main(string[] args)
         {
+            Game g = new Game();
+
+            g.Start();
 
             Console.ReadKey();
         }

@@ -18,7 +18,16 @@ namespace Mass_Effect
         }
 
         public string Name { get => name; set => name = value; }
-        internal SingleLinkedList<Mission> Missions { get => missions; set => missions = value; }
+        public SingleLinkedList<Mission> Missions { get => missions; set => missions = value; }
+
+        public (string, Mission, double) BestMission
+        {
+            get
+            {
+                Mission m = missions.Where(x => x.Weight == missions.Max(y => y.Weight)).First();
+                return (name, m, m.Weight);
+            }
+        }
 
         public int LenghtOfMissions()
         {
@@ -28,6 +37,11 @@ namespace Mass_Effect
         public double SumOfWeight()
         {
             return Missions.Sum(x => x.Weight);
+        }
+
+        public override string ToString()
+        {
+            return $"{{name: {name}, missions:{missions.ToString()}}}";
         }
     }
 }
