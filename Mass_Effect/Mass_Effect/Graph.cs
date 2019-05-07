@@ -65,10 +65,22 @@ namespace Mass_Effect
             nodeString.Append($"[Node value: {value.ToString()}, Neighbors: ");
             for (int i = 0; i < neighbors.Count; i++)
             {
-                nodeString.Append($"{neighbors[i].value.ToString()} ");
+                nodeString.Append($"{neighbors[i].value.ToString()}");
             }
             nodeString.Append("]");
             return nodeString.ToString();
+        }
+
+        public string DisplayConnection()
+        {
+            StringBuilder sr = new StringBuilder();
+            sr.Append($"{value.ToString()}\n");
+            for (int i = 0; i < neighbors.Count; i++)
+            {
+                sr.Append($">>> {neighbors[i].value.ToString()}\n");
+            }
+            sr.Append("\n\n");
+            return sr.ToString();
         }
     }
     class Graph<T>

@@ -16,7 +16,7 @@ namespace Mass_Effect
             this.starsystem = new Graph<StellarSystem>();
         }
 
-        public Graph<StellarSystem> Starsystem { get => starsystem; set => starsystem = value; }
+        public Graph<StellarSystem> Starsystem { get { return starsystem; }}
 
         public void Start()
         {
@@ -30,7 +30,7 @@ namespace Mass_Effect
                     while (!reader.EndOfStream)
                     {
                         string[] s = reader.ReadLine().Split('\t');
-                        
+
                         if (stelarsysTmp.CompareTo(s[0]) != 0)
                         {
                             if (l.Count != 0)
@@ -81,6 +81,28 @@ namespace Mass_Effect
             }
 
             //Console.WriteLine(starsystem.ToString());
+        }
+
+        public string BestPath(string starSystemName, int days)
+        {
+            List<StellarSystem> visited = new List<StellarSystem>();
+            int d = 0;
+            GraphNode<StellarSystem> start = starsystem.Nodes.FirstOrDefault(x => x.Value.Name == starSystemName); //null vizsgálat
+            visited.Add(start.Value);
+            while (d < days)
+            {
+                List<GraphNode<StellarSystem>> tmp = start.Neighbors.Where(x => !visited.Contains(x.Value)).ToList();
+                if (tmp != null && tmp.Count() >0)
+                {
+
+                    GraphNode<StellarSystem> bestChoice = tmp.OrderByDescending(x => x.Value.SumOfWeight).FirstOrDefault();
+                    visited.Add(bestChoice.Value);
+                    d += bestChoice.Value.LenghtOfMissions() + 1;
+                    start = bestChoice;
+                }
+                else break;
+            }
+            return String.Join(", ", visited.Select(x => x.Name).ToList());
         }
     }
 }

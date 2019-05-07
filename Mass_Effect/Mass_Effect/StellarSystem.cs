@@ -20,6 +20,8 @@ namespace Mass_Effect
         public string Name { get => name; set => name = value; }
         public SingleLinkedList<Mission> Missions { get => missions; set => missions = value; }
 
+        public int SumOfWeight { get { return Missions.Sum(x => x.Weight); } }
+
         public (string, Mission, double) BestMission
         {
             get
@@ -32,11 +34,6 @@ namespace Mass_Effect
         public int LenghtOfMissions()
         {
             return Missions.Count();
-        }
-
-        public double SumOfWeight()
-        {
-            return Missions.Sum(x => x.Weight);
         }
 
         public override string ToString()

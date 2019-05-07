@@ -14,6 +14,11 @@ namespace Mass_Effect
 
             g.Start();
 
+
+            Console.WriteLine(g.Starsystem.ToString());
+
+            Console.WriteLine(g.BestPath("Wolf 359", 20));
+
             Console.ReadKey();
         }
     }
