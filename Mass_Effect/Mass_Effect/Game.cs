@@ -79,30 +79,35 @@ namespace Mass_Effect
             {
                 Console.WriteLine($"Error>: {ex.ToString()}");
             }
-
-            //Console.WriteLine(starsystem.ToString());
         }
 
         public string BestPath(string starSystemName, int days)
         {
             List<StellarSystem> visited = new List<StellarSystem>();
             int d = 0;
-            GraphNode<StellarSystem> start = starsystem.Nodes.FirstOrDefault(x => x.Value.Name == starSystemName); //null vizsgálat
-            visited.Add(start.Value);
-            while (d < days)
+            GraphNode<StellarSystem> start = starsystem.Nodes.FirstOrDefault(x => x.Value.Name == starSystemName);
+            if (start != null)
             {
-                List<GraphNode<StellarSystem>> tmp = start.Neighbors.Where(x => !visited.Contains(x.Value)).ToList();
-                if (tmp != null && tmp.Count() >0)
+                visited.Add(start.Value);
+                while (d < days)
                 {
+                    List<GraphNode<StellarSystem>> tmp = start.Neighbors.Where(x => !visited.Contains(x.Value)).ToList();
+                    if (tmp != null && tmp.Count() > 0)
+                    {
 
-                    GraphNode<StellarSystem> bestChoice = tmp.OrderByDescending(x => x.Value.SumOfWeight).FirstOrDefault();
-                    visited.Add(bestChoice.Value);
-                    d += bestChoice.Value.LenghtOfMissions() + 1;
-                    start = bestChoice;
+                        GraphNode<StellarSystem> bestChoice = tmp.OrderByDescending(x => x.Value.SumOfWeight).FirstOrDefault();
+                        visited.Add(bestChoice.Value);
+                        d += bestChoice.Value.LenghtOfMissions() + 1;
+                        start = bestChoice;
+                    }
+                    else break;
                 }
-                else break;
+                return String.Join(", ", visited.Select(x => x.Name).ToList());
             }
-            return String.Join(", ", visited.Select(x => x.Name).ToList());
+            else
+            {
+                return "Nem létezik ilyen csillagrendszer!";
+            }
         }
     }
 }
